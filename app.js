@@ -28,4 +28,16 @@ const refreshScreen = () => {
     bd.forEach(item => createItem(item.task, item.status));
 }
 
+const createNewTask = (e) => {
+    const key = e.key;
+    const text = e.target.value;
+    if (key === 'Enter'){
+        bd.push ({'task': text,'status': ''})
+        refreshScreen();
+        e.target.value = '';
+    }
+}
+
+document.getElementById('newItem').addEventListener('keypress', createNewTask);
+
 refreshScreen();
