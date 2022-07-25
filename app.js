@@ -1,9 +1,7 @@
 'use strict';
 
-let bd = [
-    {'task': 'Estudar JS', 'status': ''},
-    {'task': 'netflix', 'status': 'checked'}
-]
+const getBD = () => JSON.parse(localStorage.getItem('todoList')) ?? [];
+const setBD = (bd) => localStorage.setItem('todoList', JSON.stringify(bd));
 
 const createItem = (task, status, index) => {
     const item = document.createElement('label');
@@ -25,6 +23,7 @@ const clearTasks = () => {
 
 const refreshScreen = () => {
     clearTasks();
+    const bd = getBD();
     bd.forEach((item, index) => createItem(item.task, item.status, index));
 }
 
@@ -32,19 +31,25 @@ const createNewTask = (e) => {
     const key = e.key;
     const text = e.target.value;
     if (key === 'Enter'){
+        const bd = getBD();
         bd.push ({'task': text,'status': ''})
+        setBD(bd);
         refreshScreen();
         e.target.value = '';
     }
 }
 
 const removeItem = (index) => {
+    const bd = getBD();
     bd.splice(index, 1);
+    setBD(bd);
     refreshScreen();
 }
 
 const updateItem = (index) => {
+    const bd = getBD();
     bd[index].status = bd[index].status === '' ? 'checked' : '';
+    setBD(bd);
     refreshScreen();
 }
 
